@@ -15,4 +15,19 @@ std::array<std::vector<sPoint2D>, 2> splitPolyline(std::vector<sPoint2D> polylin
     return arr2;
 }
 
+std::array<std::array<std::vector<sPoint2D>, 2>, 4> tensorPolyline(std::vector<sPoint2D> polyline1, std::vector<sPoint2D> polyline2)
+{
+    std::array<std::array<std::vector<sPoint2D>, 2>, 4> result;
+
+    std::array<std::vector<sPoint2D>, 2> split1 = splitPolyline(polyline1);
+    std::array<std::vector<sPoint2D>, 2> split2 = splitPolyline(polyline2);
+
+    result[0] = {split1[0], split2[0]};
+    result[1] = {split1[1], split2[1]};
+    result[2] = {split1[0], split2[1]};
+    result[3] = {split1[1], split2[0]};
+
+    return result;
+}
+
 #endif
