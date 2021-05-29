@@ -61,7 +61,7 @@ int main()
                                   sPoint2D(8.0F, 2.0F), sPoint2D(9.0F, 2.0F), sPoint2D(9.0F, 5.0F)};
 
   bool isCloser = arePolylinesCloserThanThreshold(polyline1, polyline3);
-  std::cout << "closerThanThreshold = " << isCloser << " (threshold = " << DISTANCE_THRESHOLD << ")\n";
+  std::cout << "closerThanThreshold = " << std::boolalpha << isCloser << " (threshold = " << DISTANCE_THRESHOLD << ")\n";
 
   return 0;
 }
