@@ -124,4 +124,23 @@ float distanceBetweenPolyline2D(const std::vector<sPoint2D> Polyline1, const std
     return minimalDistanceOfTwoAABB(BBox1, BBox2);
 }
 
+void getOptimalTensorIndexAndDistance(std::array<std::array<std::vector<sPoint2D>, 2>, 4> Tensor, int &optIndex, float &optDistance)
+{
+    int optimalIndex = -1;
+    float minDistance = std::numeric_limits<float>::max();
+
+    for (int i = 0; i < Tensor.size(); i++)
+    {
+        float distance_i = distanceBetweenPolyline2D(Tensor[i][0], Tensor[i][1]);
+        if (minDistance > distance_i)
+        {
+            minDistance = distance_i;
+            optimalIndex = i;
+        }
+    }
+    optIndex = optimalIndex;
+    optDistance = minDistance;
+    //return {optimalIndex, minDistance };
+}
+
 #endif
