@@ -3,10 +3,12 @@
 
 #include <cmath>
 #include <cassert>
+#include <iostream>
 
 #include "structs.h"
 #include "linalg.h"
 #include "misc.h"
+#include "polyline.h"
 
 float distanceBetweenTwoPoint2D(const sPoint2D P1, const sPoint2D P2)
 {
@@ -103,6 +105,23 @@ float distanceBetweenSegmentPolyline2D(const std::vector<sPoint2D> Segment, cons
     }
 
     return min_distance;
+}
+
+float distanceBetweenPolyline2D(const std::vector<sPoint2D> Polyline1, const std::vector<sPoint2D> Polyline2)
+{
+    if (Polyline1.size() == 2 && Polyline2.size() == 2)
+        return distanceBetweenTwoSegment2D(Polyline1, Polyline2);
+
+    if (Polyline1.size() == 2 && Polyline2.size() > 2)
+        return distanceBetweenSegmentPolyline2D(Polyline1, Polyline2);
+
+    if (Polyline1.size() > 2 && Polyline2.size() == 2)
+        return distanceBetweenSegmentPolyline2D(Polyline2, Polyline1);
+
+    std::vector<sPoint2D> BBox1 = getBBox(Polyline1);
+    std::vector<sPoint2D> BBox2 = getBBox(Polyline2);
+
+    return minimalDistanceOfTwoAABB(BBox1, BBox2);
 }
 
 #endif
