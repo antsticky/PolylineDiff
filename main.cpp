@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 #include "structs.h"
 #include "distances.h"
@@ -16,7 +15,13 @@ bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1,
   float distance_ip1 = -std::numeric_limits<float>::max();
 
   if (distance_i > DISTANCE_THRESHOLD)
+  {
+    std::cout << "They are not closer than "
+              << distance_i
+              << " for each other\n";
+
     return closerThanThreshold;
+  }
 
   int optIndex = -1;
   float optDistance = -1.0;
@@ -52,15 +57,12 @@ bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1,
 
 int main()
 {
-  std::vector<sPoint2D> polyline1{sPoint2D(1.0F, 5.0F), sPoint2D(1.0F, 2.0F),
-                                  sPoint2D(7.0F, 1.0F)};
+  std::vector<sPoint2D> polyline1{sPoint2D(2.0F, 3.0F), sPoint2D(3.0F, 4.0F),
+                                  sPoint2D(2.0F, 6.0F)};
   std::vector<sPoint2D> polyline2{sPoint2D(5.0F, 6.0F), sPoint2D(5.0F, 4.0F),
                                   sPoint2D(7.0F, 4.0F), sPoint2D(7.0F, 2.0F)};
 
-  std::vector<sPoint2D> polyline3{sPoint2D(6.0F, 8.0F), sPoint2D(5.0F, 7.0F),
-                                  sPoint2D(8.0F, 2.0F), sPoint2D(9.0F, 2.0F), sPoint2D(9.0F, 5.0F)};
-
-  bool isCloser = arePolylinesCloserThanThreshold(polyline1, polyline3);
+  bool isCloser = arePolylinesCloserThanThreshold(polyline1, polyline2);
   std::cout << "closerThanThreshold = " << std::boolalpha << isCloser << " (threshold = " << DISTANCE_THRESHOLD << ")\n";
 
   return 0;
