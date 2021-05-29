@@ -100,8 +100,6 @@ float distanceBetweenSegmentPolyline2D(const std::vector<sPoint2D> Segment, cons
 
         if (distance_i < min_distance)
             min_distance = distance_i;
-
-        std::cout << "i: " << i << " " << distance_i << " " << min_distance << "\n";
     }
 
     return min_distance;
