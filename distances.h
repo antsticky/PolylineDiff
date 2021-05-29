@@ -10,6 +10,8 @@
 #include "misc.h"
 #include "polyline.h"
 
+const float DISTANCE_THRESHOLD = 1.5F;
+
 float distanceBetweenTwoPoint2D(const sPoint2D P1, const sPoint2D P2)
 {
     float work1 = pow(P2.x - P1.x, 2.0);
@@ -140,7 +142,55 @@ void getOptimalTensorIndexAndDistance(std::array<std::array<std::vector<sPoint2D
     }
     optIndex = optimalIndex;
     optDistance = minDistance;
-    //return {optimalIndex, minDistance };
+}
+
+bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1, std::vector<sPoint2D> &polyline2)
+{
+    bool closerThanThreshold = false;
+
+    float distance_i = distanceBetweenPolyline2D(polyline1, polyline2);
+    float distance_ip1 = -std::numeric_limits<float>::max();
+
+    int optIndex = -1;
+    float optDistance = -1.0;
+    bool inIteration = true;
+    while (inIteration)
+    {
+
+        std::array<std::array<std::vector<sPoint2D>, 2>, 4> myTensor = tensorPolyline(polyline1, polyline2);
+        getOptimalTensorIndexAndDistance(myTensor, optIndex, optDistance);
+
+        distance_i = distance_ip1;
+        distance_ip1 = optDistance;
+
+        if (polyline1.size() == 2 || polyline2.size() == 2 || distance_ip1 >= distance_i)
+            inIteration = false;
+
+        if (distance_ip1 < DISTANCE_THRESHOLD)
+        {
+            closerThanThreshold = true;
+            inIteration = false;
+        }
+
+        // std::cout << "distance_ip1 " << distance_ip1 << "\n";
+        polyline1 = myTensor[optIndex][0];
+        polyline2 = myTensor[optIndex][1];
+    }
+
+    if (closerThanThreshold)
+    {
+        std::cout << "They are at least "
+                  << distance_ip1
+                  << " close to each other\n";
+    }
+    else
+    {
+        std::cout << "They is at least "
+                  << distance_ip1
+                  << " from each other\n";
+    }
+
+    return closerThanThreshold;
 }
 
 #endif
