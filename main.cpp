@@ -27,8 +27,6 @@ int main()
   std::vector<sPoint2D> segment1{sPoint2D(5.0F, 7.0F), sPoint2D(8.0F, 2.0F)};
   sPoint2D P1 = sPoint2D(-1.0F, 6.0F);
 
-  //std::array<std::array<std::vector<sPoint2D>, 2>, 4> tensorPolyine1 = tensorPolyline(polyline1, polyline3);
-
   float generalDist = distanceBetweenPolyline2D(polyline1, polyline3);
 
   return 0;
