@@ -51,10 +51,15 @@ float distanceBetweenTwoSegment2D(const std::vector<sPoint2D> Segment1, const st
     assert(Segment1.size() == 2);
     assert(Segment2.size() == 2);
 
-    float dist1 = distanceBetweenPointSegment2D(Segment1[0], Segment2);
-    float dist2 = distanceBetweenPointSegment2D(Segment1[1], Segment2);
+    float dist11 = distanceBetweenPointSegment2D(Segment1[0], Segment2);
+    float dist12 = distanceBetweenPointSegment2D(Segment1[1], Segment2);
+    float min_1 = fmin(dist11, dist12);
 
-    return fmin(dist1, dist2);
+    float dist21 = distanceBetweenPointSegment2D(Segment2[0], Segment1);
+    float dist22 = distanceBetweenPointSegment2D(Segment2[1], Segment1);
+    float min_2 = fmin(dist21, dist22);
+
+    return fmin(min_1, min_2);
 }
 
 // https://gamedev.stackexchange.com/questions/154036/efficient-minimum-distance-between-two-axis-aligned-squares
@@ -148,23 +153,20 @@ bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1, std::vect
 {
     bool closerThanThreshold = false;
 
-    float distance_i = distanceBetweenPolyline2D(polyline1, polyline2);
-    float distance_ip1 = -std::numeric_limits<float>::max();
+    float min_distance = distanceBetweenPolyline2D(polyline1, polyline2);
+    float distance_ip1 = std::numeric_limits<float>::max();
 
-    int optIndex = -1;
-    float optDistance = -1.0;
+    int optIndex;
+    float optDistance;
     bool inIteration = true;
     while (inIteration)
     {
 
-        std::array<std::array<std::vector<sPoint2D>, 2>, 4> myTensor = tensorPolyline(polyline1, polyline2);
-        getOptimalTensorIndexAndDistance(myTensor, optIndex, optDistance);
-
-        distance_i = distance_ip1;
-        distance_ip1 = optDistance;
-
-        if (polyline1.size() == 2 || polyline2.size() == 2 || distance_ip1 >= distance_i)
+        if (polyline1.size() == 2 || polyline2.size() == 2)
+        {
+            distance_ip1 = distanceBetweenPolyline2D(polyline1, polyline2);
             inIteration = false;
+        }
 
         if (distance_ip1 < DISTANCE_THRESHOLD)
         {
@@ -172,9 +174,15 @@ bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1, std::vect
             inIteration = false;
         }
 
-        // std::cout << "distance_ip1 " << distance_ip1 << "\n";
-        polyline1 = myTensor[optIndex][0];
-        polyline2 = myTensor[optIndex][1];
+        if (inIteration)
+        {
+            std::array<std::array<std::vector<sPoint2D>, 2>, 4> myTensor = tensorPolyline(polyline1, polyline2);
+            getOptimalTensorIndexAndDistance(myTensor, optIndex, optDistance);
+
+            polyline1 = myTensor[optIndex][0];
+            polyline2 = myTensor[optIndex][1];
+        }
+        int korte = 2;
     }
 
     if (closerThanThreshold)
@@ -185,7 +193,7 @@ bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1, std::vect
     }
     else
     {
-        std::cout << "They is at least "
+        std::cout << "They are at least "
                   << distance_ip1
                   << " from each other\n";
     }
