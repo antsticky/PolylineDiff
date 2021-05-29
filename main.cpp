@@ -30,7 +30,9 @@ int main()
 
   std::vector<sPoint2D> segment2{sPoint2D(1.0F, 2.0F), sPoint2D(7.0F, 1.0F)};
 
-  // std::cout << "Distance between two segment: " << minimalDistanceOfTwoAABB(segment1, segment2) << "\n";
+  //std::cout << "Distance between two segment: " << minimalDistanceOfTwoAABB(segment1, segment2) << "\n";
+
+  std::cout << distanceBetweenSegmentPolyline2D(segment1, polyline1) << "\n";
 
   return 0;
 }

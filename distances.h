@@ -84,4 +84,27 @@ float minimalDistanceOfTwoAABB(const std::vector<sPoint2D> Box1, const std::vect
     return sqrt(pow(inner_width, 2) + pow(inner_height, 2));
 }
 
+float distanceBetweenSegmentPolyline2D(const std::vector<sPoint2D> Segment, const std::vector<sPoint2D> Polyline)
+{
+    assert(Segment.size() == 2);
+
+    if (Polyline.size() == 2)
+        return distanceBetweenTwoSegment2D(Segment, Polyline);
+
+    float min_distance = std::numeric_limits<float>::max();
+    for (int i = 0; i < Polyline.size() - 1; i++)
+    {
+
+        std::vector<sPoint2D> Segment_i{Polyline[i], Polyline[i + 1]};
+        float distance_i = distanceBetweenTwoSegment2D(Segment, Segment_i);
+
+        if (distance_i < min_distance)
+            min_distance = distance_i;
+
+        std::cout << "i: " << i << " " << distance_i << " " << min_distance << "\n";
+    }
+
+    return min_distance;
+}
+
 #endif
