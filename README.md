@@ -46,6 +46,8 @@ The **brute-force** algorithm scales with $N^2$ $`\sqrt{2}`$
 SE = \frac{\sigma}{\sqrt{n}}
 ```
 
+<pre xml:lang="latex">\sqrt{2}</pre>
+
  <img src="https://latex.codecogs.com/gif.latex?O_t=\text { Onset event at time bin } t " /> 
 
 further improved by rid off sqrt and deal with...
