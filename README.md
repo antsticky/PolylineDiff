@@ -40,15 +40,9 @@ The task was solved by two different approach:
 - **advanced**: In every step it splits the polylines and with a bounding box techniques checks if the possible achievable distance is smaller then the pre-defined threshold. If it is then for further process it takes it in the queue, if not then discards. Each iteration stops if one of the iterational polyline is not a polyline (i.e. it is a segment) or the possible achievable distance is bigger then the aimed.
 
 ## Runtime complexity
-The **brute-force** algorithm scales with O(n<sup>2</sup>)
+The **brute-force** algorithm scales with O(N<sup>2</sup>) since we calculates all the possible pairing. Furthermore, if there is no segment where they are within the threshold it really calculates all the pairs. Remark, if there is multiple segments along the two polyine where they are close enough, then the algorithm is still scales with O(N<sup>2</sup>), it only introduce a scaling by the average ratio of the "good" segments.
 
-```math
-SE = \frac{\sigma}{\sqrt{n}}
-```
-
-<pre xml:lang="latex">\sqrt{2}</pre>
-
- <img src="https://latex.codecogs.com/gif.latex?O_t=\text { Onset event at time bin } t " /> 
+### Further improved
 
 further improved by rid off sqrt and deal with...
 
