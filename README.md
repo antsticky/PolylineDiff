@@ -40,6 +40,8 @@ The task was solved by two different approach:
 - **advanced**: In every step it splits the polylines and with a bounding box techniques checks that if the possible achievable distance is smaller then the pre-defined threshold. If the given distance is smaller, then for further process, it takes the polyline pair in the queue. If not then discards them. Each iteration stops when one of the iterational polyline is not a polyline (i.e. it is a segment) or the possible achievable distance is bigger than the aimed one.
 
 ## Runtime complexity
+Further in this section lets assume that the two polyline contains approximately same amounts of vertex (in order to avoid the analysis of some trivial cases).
+
 The **brute-force** algorithm scales with O(N<sup>2</sup>) since it calculates all the possible pairing. Furthermore, if there is no segment where they are within the threshold then it really calculates all the pairs. Remark, if there are multiple segments along the two polyine, where they are close enough, then the algorithm is still scales with O(N<sup>2</sup>). It only introduces a scaling by the average ratio of the "good" segments.
 
 In the case of the **advanced** approach, in average, the complexity is O(N * log N), but in the worst case it still scales by O(N<sup>2</sup>). The algorithm could be slow if there are a lot of overlapping bounding boxes between the polylines. To understand this behaviour I played with polylines where their trend lines were *parallel* and *orthogonal* to each other. In both cases the points were selected with different probabilities, but the lines were generated differently, e.g. for orthogonal case:
