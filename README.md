@@ -64,10 +64,11 @@ for (int i = 0; i < polyline_length_max; i++)
 
 
 ### Further improved
+In the **advanced** approach only the basic idea was implemented, but the code itself might not effective; it contains declaration beside for loops, there remained some unnecessary debugging calculations, not well structured which in some cases requires unnecessary data transformations...
 
-further improved by rid off sqrt and deal with...
+Also a further improved can be to totaly rid off `sqrt` function. It is costly compare to the basic arithmetrics. We can easily eliminate it from the code, since it appears in the distand calculations, so we can simply use the square distance and compare them to the square of the threshold level `DISTANCE_THRESHOLD`.
 
-Restructure and refactor the code
+As a side note, if we really need the `sqrt` function then we could replace it with an approximation which is much faster, e.g. for `1/sqrt(x)` see [A Quake III Algorithm](https://www.youtube.com/watch?v=p8u_k2LIZyo&t=957s).
 
 ## Links
 - [**Randy Gaul's Game Programming Blog**: Distance Point to Line Segment](https://www.randygaul.net/2014/07/23/distance-point-to-line-segment/)
