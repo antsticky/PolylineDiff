@@ -10,7 +10,7 @@
 #include "misc.h"
 #include "polyline.h"
 
-const float DISTANCE_THRESHOLD = 0.5F;
+const float DISTANCE_THRESHOLD = 1.5F;
 
 float distanceBetweenTwoPoint2D(const sPoint2D P1, const sPoint2D P2)
 {
