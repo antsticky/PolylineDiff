@@ -19,7 +19,6 @@ float distanceBetweenTwoPoint2D(const sPoint2D P1, const sPoint2D P2)
     return sqrt(work1 + work2);
 }
 
-// https://www.randygaul.net/2014/07/23/distance-point-to-line-segment/
 float distanceBetweenPointSegment2D(const sPoint2D P, const std::vector<sPoint2D> Segment)
 {
     assert(Segment.size() == 2);
@@ -62,7 +61,6 @@ float distanceBetweenTwoSegment2D(const std::vector<sPoint2D> Segment1, const st
     return fmin(min_1, min_2);
 }
 
-// https://gamedev.stackexchange.com/questions/154036/efficient-minimum-distance-between-two-axis-aligned-squares
 float minimalDistanceOfTwoAABB(const std::vector<sPoint2D> Box1, const std::vector<sPoint2D> Box2)
 {
     assert(Box1.size() == 2);

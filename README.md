@@ -46,3 +46,7 @@ The **brute-force** algorithm scales with O(N<sup>2</sup>) since we calculates a
 
 further improved by rid off sqrt and deal with...
 
+## Links
+- [**Randy Gaul's Game Programming Blog**: Distance Point to Line Segment](https://www.randygaul.net/2014/07/23/distance-point-to-line-segment/)
+- [**GameDev**: Efficient minimum distance between two axis aligned squares?](https://gamedev.stackexchange.com/questions/154036/efficient-minimum-distance-between-two-axis-aligned-squares)
+- [**StackOverflow**: Distance between two polylines](https://stackoverflow.com/questions/45861488/distance-between-two-polylines)
