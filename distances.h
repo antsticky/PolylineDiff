@@ -151,6 +151,8 @@ void getOptimalTensorIndexAndDistance(std::array<std::array<std::vector<sPoint2D
 
 bool arePolylinesCloserThanThresholdBruteforce(std::vector<sPoint2D> &polyline1, std::vector<sPoint2D> &polyline2)
 {
+    bool closerThanThreshold = false;
+
     for (int i = 0; i < polyline1.size() - 1; i++)
     {
         std::vector<sPoint2D> segment_i{polyline1[i], polyline1[i + 1]};
@@ -158,11 +160,12 @@ bool arePolylinesCloserThanThresholdBruteforce(std::vector<sPoint2D> &polyline1,
 
         if (distance_i < DISTANCE_THRESHOLD)
         {
-            return true;
+            closerThanThreshold = true;
+            return closerThanThreshold;
         }
     }
 
-    return false;
+    return closerThanThreshold;
 }
 
 bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1, std::vector<sPoint2D> &polyline2)
@@ -170,49 +173,51 @@ bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1, std::vect
     bool closerThanThreshold = false;
 
     float min_distance = distanceBetweenPolyline2D(polyline1, polyline2);
-    float distance_ip1 = std::numeric_limits<float>::max();
+    if (min_distance > DISTANCE_THRESHOLD)
+        return closerThanThreshold;
 
-    int optIndex;
-    float optDistance;
-    bool inIteration = true;
-    while (inIteration)
+    min_distance = std::numeric_limits<float>::max();
+    std::vector<std::array<std::vector<sPoint2D>, 2>> Queue;
+    std::array<std::array<std::vector<sPoint2D>, 2>, 4> Tensor = tensorPolyline(polyline1, polyline2);
+    Queue.push_back(Tensor[0]);
+    Queue.push_back(Tensor[1]);
+    Queue.push_back(Tensor[2]);
+    Queue.push_back(Tensor[3]);
+
+    std::vector<sPoint2D> polyline_i;
+    std::vector<sPoint2D> polyline_j;
+    float distance_i;
+    while (!Queue.empty())
     {
+        polyline_i = Queue[Queue.size() - 1][0];
+        polyline_j = Queue[Queue.size() - 1][1];
 
-        if (polyline1.size() == 2 || polyline2.size() == 2)
-        {
-            distance_ip1 = distanceBetweenPolyline2D(polyline1, polyline2);
-            inIteration = false;
-        }
+        distance_i = distanceBetweenPolyline2D(polyline_i, polyline_j);
 
-        if (distance_ip1 < DISTANCE_THRESHOLD)
+        if (distance_i < min_distance && (polyline_i.size() == 2 or polyline_j.size() == 2))
+            min_distance = distance_i;
+
+        if (min_distance < DISTANCE_THRESHOLD)
         {
+            std::cout << "They are at least " << min_distance << " close to each other\n";
+
             closerThanThreshold = true;
-            inIteration = false;
+            return closerThanThreshold;
         }
 
-        if (inIteration)
+        if (distance_i < DISTANCE_THRESHOLD)
         {
-            std::array<std::array<std::vector<sPoint2D>, 2>, 4> myTensor = tensorPolyline(polyline1, polyline2);
-            getOptimalTensorIndexAndDistance(myTensor, optIndex, optDistance);
-
-            polyline1 = myTensor[optIndex][0];
-            polyline2 = myTensor[optIndex][1];
+            Tensor = tensorPolyline(polyline_i, polyline_j);
+            Queue.push_back(Tensor[0]);
+            Queue.push_back(Tensor[1]);
+            Queue.push_back(Tensor[2]);
+            Queue.push_back(Tensor[3]);
         }
-        int korte = 2;
+
+        Queue.pop_back();
     }
 
-    if (closerThanThreshold)
-    {
-        std::cout << "They are at least "
-                  << distance_ip1
-                  << " close to each other\n";
-    }
-    else
-    {
-        std::cout << "They are at least "
-                  << distance_ip1
-                  << " from each other\n";
-    }
+    std::cout << "They are at least " << min_distance << " from each other\n";
 
     return closerThanThreshold;
 }
