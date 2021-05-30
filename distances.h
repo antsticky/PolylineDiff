@@ -10,7 +10,7 @@
 #include "misc.h"
 #include "polyline.h"
 
-const float DISTANCE_THRESHOLD = 1.5F;
+const float DISTANCE_THRESHOLD = 0.5F;
 
 float distanceBetweenTwoPoint2D(const sPoint2D P1, const sPoint2D P2)
 {
@@ -147,6 +147,22 @@ void getOptimalTensorIndexAndDistance(std::array<std::array<std::vector<sPoint2D
     }
     optIndex = optimalIndex;
     optDistance = minDistance;
+}
+
+bool arePolylinesCloserThanThresholdBruteforce(std::vector<sPoint2D> &polyline1, std::vector<sPoint2D> &polyline2)
+{
+    for (int i = 0; i < polyline1.size() - 1; i++)
+    {
+        std::vector<sPoint2D> segment_i{polyline1[i], polyline1[i + 1]};
+        float distance_i = distanceBetweenSegmentPolyline2D(segment_i, polyline2);
+
+        if (distance_i < DISTANCE_THRESHOLD)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1, std::vector<sPoint2D> &polyline2)
