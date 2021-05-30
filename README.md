@@ -40,7 +40,7 @@ The task was solved by two different approach:
 - **advanced**: In every step it splits the polylines and with a bounding box techniques checks if the possible achievable distance is smaller then the pre-defined threshold. If it is then for further process it takes it in the queue, if not then discards. Each iteration stops if one of the iterational polyline is not a polyline (i.e. it is a segment) or the possible achievable distance is bigger then the aimed.
 
 ## Runtime complexity
-The **brute-force** algorithm scales with $N^2$
+The **brute-force** algorithm scales with $N^2$ $`\sqrt{2}`$
 
 ```math
 SE = \frac{\sigma}{\sqrt{n}}
