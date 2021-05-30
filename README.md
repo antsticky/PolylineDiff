@@ -42,9 +42,32 @@ The task was solved by two different approach:
 ## Runtime complexity
 The **brute-force** algorithm scales with O(N<sup>2</sup>) since we calculates all the possible pairing. Furthermore, if there is no segment where they are within the threshold it really calculates all the pairs. Remark, if there is multiple segments along the two polyine where they are close enough, then the algorithm is still scales with O(N<sup>2</sup>), it only introduce a scaling by the average ratio of the "good" segments.
 
+In the case of the **advanced** approach in average the complexity is O(N * log N), but the worst case is still scales by O(N<sup>2</sup>). The algorithm could be slow if there are a lot of overlapping bounding boxes between the polyline. To understand this behaviour I played with polylines where their trend line were *parallel* and *orthogonal* to each other. In both case the points were selected with different probabilities, but the lines were generated differently, e.g. for orthogonal case:
+
+```cpp
+std::vector<sPoint2D> ntest1;
+std::vector<sPoint2D> ntest2;
+for (int i = 0; i < polyline_length_max; i++)
+{
+    r = ((double)rand() / (RAND_MAX));
+
+    if (r < drop_1)
+        ntest1.push_back(sPoint2D(x_running, r));
+
+    if (r < drop_2)
+        ntest2.push_back(sPoint2D(r + polyline_length_max - 1, y_running));
+
+    x_running += 1.0;
+    y_running += 1.0;
+}
+```
+
+
 ### Further improved
 
 further improved by rid off sqrt and deal with...
+
+Restructure and refactor the code
 
 ## Links
 - [**Randy Gaul's Game Programming Blog**: Distance Point to Line Segment](https://www.randygaul.net/2014/07/23/distance-point-to-line-segment/)
