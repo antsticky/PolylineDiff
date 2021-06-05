@@ -1,6 +1,3 @@
-#ifndef LINALG_HPP_INCLUDED
-#define LINALG_HPP_INCLUDED
-
 #include "structs.h"
 
 float DotProduct2D(const sPoint2D P1, const sPoint2D P2)
@@ -12,5 +9,3 @@ sPoint2D PointDiff2D(const sPoint2D P1, const sPoint2D P2)
 {
     return sPoint2D(P2.x - P1.x, P2.y - P1.y);
 }
-
-#endif

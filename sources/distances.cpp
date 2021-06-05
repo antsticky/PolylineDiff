@@ -1,14 +1,11 @@
-#ifndef DISTANCE_HPP_INCLUDED
-#define DISTANCE_HPP_INCLUDED
-
 #include <cmath>
 #include <cassert>
 #include <iostream>
 
 #include "structs.h"
-#include "linalg.h"
-#include "misc.h"
-#include "polyline.h"
+#include "linalg.cpp"
+#include "misc.cpp"
+#include "polyline.cpp"
 
 const float DISTANCE_THRESHOLD = 1.5F;
 const float EPS = 1.0e-10;
@@ -260,5 +257,3 @@ bool arePolylinesCloserThanThreshold(std::vector<sPoint2D> &polyline1, std::vect
 
     return closerThanThreshold;
 }
-
-#endif

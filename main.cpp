@@ -1,8 +1,8 @@
 #include <iostream>
-#include <chrono>
+#include <vector>
 
-#include "headers/structs.h"
-#include "headers/distances.h"
+#include "sources/structs.h"
+#include "sources/distances.cpp"
 
 int main()
 {

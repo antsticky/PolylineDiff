@@ -1,7 +1,5 @@
-#ifndef POLYLINE_ARITHM_INCLUDED
-#define POLYLINE_ARITHM_INCLUDED
-
 #include <array>
+#include <vector>
 
 #include "structs.h"
 
@@ -55,5 +53,3 @@ std::array<std::array<std::vector<sPoint2D>, 2>, 4> tensorPolyline(std::vector<s
 
     return result;
 }
-
-#endif
