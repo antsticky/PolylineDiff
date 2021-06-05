@@ -11,6 +11,7 @@
 #include "polyline.h"
 
 const float DISTANCE_THRESHOLD = 1.5F;
+const float EPS = 1.0e-10;
 
 float distanceBetweenTwoPoint2D(const sPoint2D P1, const sPoint2D P2)
 {
@@ -45,10 +46,50 @@ float distanceBetweenPointSegment2D(const sPoint2D P, const std::vector<sPoint2D
     return sqrt(DotProduct2D(e, e));
 }
 
+bool isSegmentsIntersect(const std::vector<sPoint2D> Segment1, const std::vector<sPoint2D> Segment2)
+{
+    assert(Segment1.size() == 2);
+    assert(Segment2.size() == 2);
+
+    sPoint2D P1 = Segment1[0];
+    sPoint2D P2 = Segment1[1];
+
+    sPoint2D P3 = Segment2[0];
+    sPoint2D P4 = Segment2[1];
+
+    float denom = (P4.y - P3.y) * (P2.x - P1.x) - (P4.x - P3.x) * (P2.y - P1.y);
+    float numera = (P4.x - P3.x) * (P1.y - P3.y) - (P4.y - P3.y) * (P1.x - P3.x);
+    float numerb = (P2.x - P1.x) * (P1.y - P3.y) - (P2.y - P1.y) * (P1.x - P3.x);
+
+    // Are the line coincident?
+    if (abs(numera) < EPS && abs(numerb) < EPS && abs(denom) < EPS)
+        return true;
+
+    // Are the line parallel
+    if (abs(denom) < EPS)
+        return false;
+
+    // Is the intersection along the the segments
+    float mua = numera / denom;
+    float mub = numerb / denom;
+    if (mua < 0 || mua > 1 || mub < 0 || mub > 1)
+        return false;
+
+    double x = P1.x + mua * (P2.x - P1.x);
+    double y = P1.y + mua * (P2.y - P1.y);
+
+    std::cout << "They are intersect at: (" << x << "," << y << ")\n";
+
+    return true;
+}
+
 float distanceBetweenTwoSegment2D(const std::vector<sPoint2D> Segment1, const std::vector<sPoint2D> Segment2)
 {
     assert(Segment1.size() == 2);
     assert(Segment2.size() == 2);
+
+    if (isSegmentsIntersect(Segment1, Segment2))
+        return 0.0;
 
     float dist11 = distanceBetweenPointSegment2D(Segment1[0], Segment2);
     float dist12 = distanceBetweenPointSegment2D(Segment1[1], Segment2);

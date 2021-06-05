@@ -73,6 +73,7 @@ A further improved can be, if we totaly rid off the `sqrt` function. It is costl
 As a side note, if we really need the `sqrt` function then we could replace it with an approximation which is much faster, e.g. for `1/sqrt(x)` see [A Quake III Algorithm](https://www.youtube.com/watch?v=p8u_k2LIZyo&t=957s).
 
 ## Links
+- [**Paul Bourke**: Points, lines, and planes](http://paulbourke.net/geometry/pointlineplane/)
 - [**Randy Gaul's Game Programming Blog**: Distance Point to Line Segment](https://www.randygaul.net/2014/07/23/distance-point-to-line-segment/)
 - [**GameDev**: Efficient minimum distance between two axis aligned squares?](https://gamedev.stackexchange.com/questions/154036/efficient-minimum-distance-between-two-axis-aligned-squares)
 - [**StackOverflow**: Distance between two polylines](https://stackoverflow.com/questions/45861488/distance-between-two-polylines)
